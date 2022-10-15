@@ -41,5 +41,22 @@ namespace Kogane
                     : objectsOfTypeAll.FirstOrDefault( x => x.gameObject.scene == self.CustomScene() )
                 ;
         }
+
+
+        public static Component[] FindComponentsOfType( this StageHandle self, Type type )
+        {
+            if ( !self.IsValid() ) throw new Exception( "Stage is not valid." );
+
+            var objectsOfTypeAll = Resources
+                    .FindObjectsOfTypeAll( type )
+                    .OfType<Component>()
+                    .ToArray()
+                ;
+
+            return self.IsMainStage()
+                    ? objectsOfTypeAll.Where( x => !EditorUtility.IsPersistent( x ) && !EditorSceneManager.IsPreviewScene( x.gameObject.scene ) ).ToArray()
+                    : objectsOfTypeAll.Where( x => x.gameObject.scene == self.CustomScene() ).ToArray()
+                ;
+        }
     }
 }

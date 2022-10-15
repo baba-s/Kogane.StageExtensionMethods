@@ -10,5 +10,10 @@ namespace Kogane
         {
             return self.stageHandle.FindComponentOfType( type );
         }
+
+        public static Component[] FindComponentsOfType( this Stage self, Type type )
+        {
+            return self.stageHandle.FindComponentsOfType( type );
+        }
     }
 }
